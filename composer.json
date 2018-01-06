@@ -1,0 +1,11 @@
+{
+    "name": "sanatiel/son-financas",
+    "require": {
+
+    },
+    "autoload": {
+    		"psr-4":{
+    			"SONFin\\" : "src/"
+    		}
+    	}
+}

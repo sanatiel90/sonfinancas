@@ -1,7 +1,7 @@
 {
     "name": "sanatiel/son-financas",
     "require": {
-
+        "robmorgan/phinx": "0.7.1"
     },
     "autoload": {
     		"psr-4":{

@@ -37,7 +37,7 @@ return [
 		'default_migration_table' => 'migrations',
 		//config de conex com o bd {sao as infor de user,password,db, etc q vao ser usadas pelo phinx}
 		'default_database' => 'development',
-		//dados da conexao fornecidos ao phinx foram pegues no array $db['development'] atraves da func list() 
+		/*dados da conexao fornecidos ao phinx foram pegues no array $db['development'] atraves da func list(); esses dados de conex são apenas para o ambiente development (que esta setado como padrao)*/
 		'development' => [
 			'adapter' => $adapter,
 			'host' => $host,

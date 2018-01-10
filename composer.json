@@ -1,7 +1,8 @@
 {
     "name": "sanatiel/son-financas",
     "require": {
-        "robmorgan/phinx": "0.7.1"
+        "robmorgan/phinx": "0.7.1",
+        "xtreamwayz/pimple-container-interop": "^1.0"
     },
     "autoload": {
     		"psr-4":{

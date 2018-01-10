@@ -9,7 +9,7 @@ interface ServiceContainerInterface {
 
 	public function add(string $name, $service); //tipo string obrigatorio apenas para param $name; param $service pode receber qq tipo de dado ou classe
 
-	public function addLazy(string $name, callable $callable);
+	public function addLazy(string $name, callable $callable); //servico lazy, carregamento retardado
 
 	public function get(string $name);
 

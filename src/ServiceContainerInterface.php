@@ -3,7 +3,7 @@ declare(strict_types = 1);  //comando necessario para php 7 usar recurso de tipa
 
 namespace SONFin; 
 
-//interface resposavel por criar e disponibilizar servicos, q serao utilizados em diversas partes da aplicacao
+//interface resposavel por criar e disponibilizar metodos para manipular servicos, q serao utilizados em diversas partes da aplicacao
 interface ServiceContainerInterface {
 	//metodos dos servicos q serao disponibilizados pela interface
 

@@ -20,6 +20,7 @@ class ServiceContainer implements ServiceContainerInterface{
 		$this->container[$name] = $service; 
 	} 
 	
+	//add um novo servico ao container, mas com retardo
 	public function addLazy(string $name, callable $callable){
 		$this->container[$name] = $this->container->factory($callable);
 	}

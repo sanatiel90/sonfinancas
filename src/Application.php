@@ -35,11 +35,28 @@ class Application {
 	}
 
 
-	/*metodo para registrar um plugin nessa classe, o metodo register do obj plugin vai receber como parametro 
-	  a instancia de serviceContainer da class Application*/ 
+	/*metodo para 'plugar'/adicionar um plugin nessa classe; o metodo register do obj plugin vai receber como parametro 
+	  a instancia de serviceContainer da class Application e vai adicionar os servicos no container*/ 
 	public function plugin(PluginInterface $plugin): void{
 		$plugin->register($this->serviceContainer);
 	}
+
+	//met. para acessar uma rota (caminho) informada e executar uma acao, tambem pode ser nomeada; retorna instancia da propria class Application 
+	public function get($path, $action, $name = null): Application{
+		$routing = $this->service('routing'); //acessando o servico 'routing' (q é o servico $map do RoutePlugin) para mapear/registrar as rotas
+		$routing->get($name,$path,$action); //metodo get do servico Map (q é da lib AureaRouter e esta configurada com nome 'routing' ) 
+		return $this;  //retorna instancia de Application
+
+	}
+
+
+	//startando app a partir da rota acessada
+	public function start(){
+		$route = $this->service('route');	//pegando rota acessada atraves do servico 'route' (matcher + request)
+		$callable = $route->handler; //handler: pegando a acao gerada pelo servico route(a acao será uma funcao, q sera armazen na var $callable)
+		$callable(); //chamando a funcao/acao q tem dentro da var $callable
+	}
+
 
 }
 

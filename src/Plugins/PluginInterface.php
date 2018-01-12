@@ -6,7 +6,7 @@ namespace SONFin\Plugins;
 //todos os plugins usarao essa interfac
 interface PluginInterface {
 	
-	//metodo q sera usa por todos os Plugins; registra um novo plugin com base numa instancia de servico de ServiceContainerInterface
+	//metodo q sera usado por todos os Plugins; registra novos servicos no container com base numa instancia de  ServiceContainerInterface
 	public function register(ServiceContainerInterface $serviceContainer);
 
 

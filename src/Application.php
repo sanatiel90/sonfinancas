@@ -3,6 +3,8 @@ declare(strict_types = 1);
 namespace SONFin;
 
 use SONFin\Plugins\PluginInterface;
+use Psr\Http\Message\RequestInterface;
+use SONFin\ServiceContainerInterface;
 /**
 * esta classe irá administrar a aplicacao
   - irá usar o ServiceContainer, q por sua vez implementa a interface ServiceContainerInterface
@@ -53,8 +55,21 @@ class Application {
 	//startando app a partir da rota acessada
 	public function start(){
 		$route = $this->service('route');	//pegando rota acessada atraves do servico 'route' (matcher + request)
+		/** @var ServerRequestInterface $request */
+		$request = $this->service(RequestInterface::class); //criando servico de requisicao atraves do servico RequestInterface; ele armazenara os parametros
+
+		//se rota digitada nao existir
+		if(!$route){
+			echo "Page not found";
+		}
+
+		//percorrendo os atributos(parametros) informados na rota e atribuindo-os à $request
+		foreach($route->attributes as $key => $value){
+			$request = $request->withAttribute($key,$value);
+		}
+
 		$callable = $route->handler; //handler: pegando a acao gerada pelo servico route(a acao será uma funcao, q sera armazen na var $callable)
-		$callable(); //chamando a funcao/acao q tem dentro da var $callable
+		$callable($request); //chamando a funcao/acao q tem dentro da var $callable, juntamente com os parametros da request
 	}
 
 

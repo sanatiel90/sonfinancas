@@ -45,7 +45,7 @@ class RoutePlugin implements PluginInterface
 		/*add servico com metodo com retardo; add request ao matcher; ContainerInterface: instancia do pimple que permite acessar todos os servicos ja 	      registrados*/
 		$container->addLazy('route', function(ContainerInterface $container){
 			$matcher = $container->get('routing.matcher');	//recuperando matcher atraves do servico 'routing.matcher'
-			$request = $container->get(RequestInterface::class) //recuperando request atraves do servico 'RequestInterface::class'
+			$request = $container->get(RequestInterface::class); //recuperando request atraves do servico 'RequestInterface::class'
 
 			return $matcher->match($request); 
 			//atribuindo request(requsicao q foi feita) ao matcher atraves do met. match() e retornando a rota a ser usada pelo sistema 

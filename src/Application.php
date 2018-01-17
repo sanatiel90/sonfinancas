@@ -3,8 +3,10 @@ declare(strict_types = 1);
 namespace SONFin;
 
 use SONFin\Plugins\PluginInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface; //lib Zend\Diactoros que implementa a PSR 7 com padrões para uso do HTTP
+use Psr\Http\Message\ResponseInterface; //lib Zend\Diactoros que implementa a PSR 7 com padrões para uso do HTTP
 use SONFin\ServiceContainerInterface;
+use Zend\Diactoros\Response\SapiEmitter;
 /**
 * esta classe irá administrar a aplicacao
   - irá usar o ServiceContainer, q por sua vez implementa a interface ServiceContainerInterface
@@ -53,7 +55,8 @@ class Application {
 
 
 	//startando app a partir da rota acessada
-	public function start(){
+	public function start()
+	{
 		$route = $this->service('route');	//pegando rota acessada atraves do servico 'route' (matcher + request)
 		/** @var ServerRequestInterface $request */
 		$request = $this->service(RequestInterface::class); //criando servico de requisicao atraves do servico RequestInterface; ele armazenara os parametros
@@ -61,6 +64,7 @@ class Application {
 		//se rota digitada nao existir
 		if(!$route){
 			echo "Page not found";
+			exit;
 		}
 
 		//percorrendo os atributos(parametros) informados na rota e atribuindo-os à $request
@@ -69,9 +73,21 @@ class Application {
 		}
 
 		$callable = $route->handler; //handler: pegando a acao gerada pelo servico route(a acao será uma funcao, q sera armazen na var $callable)
-		$callable($request); //chamando a funcao/acao q tem dentro da var $callable, juntamente com os parametros da request
+		 
+		//colocando na resposta da requisicao a funcao/acao q tem dentro da var $callable, q é a ação da rota, juntamente com os parametros da request 
+		$response = $callable($request); 
+
+		$this->emitResponse($response);	//emitindo a resposta da requisicao
 	}
 
+	//metodo para emitir respostas da requisicao; param: instancia de ResponseInterface, q é a classe padrão da PSR 7 para respostas HTTP
+	public function emitResponse(ResponseInterface $response)
+	{
+		$emitter = new SapiEmitter(); //class da lib Zend\Diactoros: emissor baseado na API de Servidor do PHP (Sapi : Server API)
+		$emitter->emit($response);
+	}
+	
+	
 
 }
 

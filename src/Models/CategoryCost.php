@@ -17,4 +17,8 @@ class CategoryCost extends Model //class Eloquent para Models
 	Ex: os metodos da classe CategoryCost terao efeito numa tabela q se chame category_costs; Outros exemplos:
 	User = users / Bill = bills / CarMotor = car_motors */
 	
+	//campos q podem ser persistidos no banco; se for passado array com campos diferentes desses, eles nao seram incluidos
+	protected $fillable = [
+		'name'
+	];
 }

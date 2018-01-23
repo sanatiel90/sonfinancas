@@ -28,7 +28,7 @@ class RoutePlugin implements PluginInterface
 		//matcher: servico resp. por identificar a rota q esta sendo usada, precisa receber a requisicao (instancia de RequestInterface) q foi feita
 		$matcher = $routerContainer->getMatcher();
 
-		//generator: servico resp. por criar links(redirecionamentos) com base nas rotas criadas
+		//generator: servico resp. por criar links(redirecionamentos) com base nas rotas criadas; cria rotas nomeadas
 		$generator = $routerContainer->getGenerator();
 
 		//request: servico das requisicoes, obtivo atraves do metodo protected getRequest(); 

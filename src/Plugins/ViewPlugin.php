@@ -21,8 +21,16 @@ class ViewPlugin implements PluginInterface
 		$container->addLazy('twig', function(ContainerInterface $container){
 			//criando carregador de templates (Twig_Loader_FileSystem:class para criar o carregador); param: pasta onde os templates estão armazenados
 			$loader = new \Twig_Loader_FileSystem(__DIR__ . '/../../templates'); 
-		
+
 			$twig = new \Twig_Environment($loader); // Twig_Environment: ambiente do Twig
+
+			$generator = $container->get('routing.generator');	//criando servico para nomear rotas
+			
+			//add uma funcao ao twig, chamada 'route'; ela vai usar o servico generator para criar rotas nomeadas, informando o nome da rota e eventuais param
+			$twig->addFunction(new \Twig_SimpleFunction('route', function(string $name, 	array $params = []) use($generator){
+				return $generator->generate($name,$params);
+
+			}));
 
 			return $twig;
  

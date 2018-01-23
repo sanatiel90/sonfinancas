@@ -7,6 +7,7 @@ use Psr\Http\Message\RequestInterface; //lib Zend\Diactoros que implementa a PSR
 use Psr\Http\Message\ResponseInterface; //lib Zend\Diactoros que implementa a PSR 7 com padrões para uso do HTTP
 use SONFin\ServiceContainerInterface;
 use Zend\Diactoros\Response\SapiEmitter;
+use Zend\Diactoros\Response\RedirectResponse;
 /**
 * esta classe irá administrar a aplicacao
   - irá usar o ServiceContainer, q por sua vez implementa a interface ServiceContainerInterface
@@ -45,7 +46,7 @@ class Application {
 		$plugin->register($this->serviceContainer);
 	}
 
-	//met. para acessar uma rota (caminho) informada e executar uma acao, tambem pode ser nomeada; retorna instancia da propria class Application 
+	//met. para acessar uma rota (caminho) informada via GET e executar uma acao, tambem pode ser nomeada; retorna instancia da propria class Application 
 	public function get($path, $action, $name = null): Application{
 		$routing = $this->service('routing'); //acessando o servico 'routing' (q é o servico $map do RoutePlugin) para mapear/registrar as rotas
 		$routing->get($name,$path,$action); //metodo get do servico Map (q é da lib AureaRouter e esta configurada com nome 'routing' ) 
@@ -53,6 +54,33 @@ class Application {
 
 	}
 
+
+	//met. para acessar uma rota (caminho) informada via POST e executar uma acao, tambem pode ser nomeada; retorna instancia da propria class Application 
+	public function post($path, $action, $name = null): Application{
+		$routing = $this->service('routing'); 
+		$routing->post($name,$path,$action); 
+		return $this; 
+
+	}
+
+
+
+	//met. para redirecionar para uma determinada rota 
+	public function redirect($path){	
+
+		return new RedirectResponse($path); 
+
+	}
+
+	//met. para redirecionar com base numa determinada rota nomeada 
+	public function route(string $name, array $params = []){	
+		$generator = $this->service('routing.generator');	//criando servico para nomear rotas
+		$path = $generator->generate($name, $params);
+		return $this->redirect($path);
+	}
+	 
+
+	
 
 	//startando app a partir da rota acessada
 	public function start()

@@ -13,8 +13,6 @@ use SONFin\Models\CategoryCost;
 
 require_once __DIR__ . '/../vendor/autoload.php';  //carregando dependencias
 
-
-
 $serviceContainer = new ServiceContainer(); //instanciando container de servicos 
 
 $app = new Application($serviceContainer); //instanciando  application
@@ -26,19 +24,6 @@ $app->plugin(new ViewPlugin());
 $app->plugin(new DbPlugin());
 
 
-$app->get('/category-costs', function(ServerRequestInterface $request) use($app)
-{
-	$view = $app->service('view.renderer');
-
-	$categoryCostModel = new CategoryCost();	//criando model de CategoryCost para acessar dados do bd
-	$categories = $categoryCostModel->all();	//listando todas categorias
-
-   //passando categorias para o contexto, para q possam ser acessadas na view pela tag do twig {% %}
-	return $view->render('category-costs/list.html.twig', [
-		'categories' => $categories
-	]); 
-
-});
 
 
 //usando met get() para criar uma rota para ser acessada via GET; parametros serao armazenados numa instancia de ServiceRequestInterface
@@ -63,6 +48,8 @@ $app->get('/teste/rota{name}',function(ServerRequestInterface $request) use($app
 
 });
 
+//importando controller referent as categorias; precisa ser importado depois da criacao da instancia de $app, pois esta instancia sera usada la no controller
+require_once __DIR__ . '/../src/controllers/category-costs.php'; 
 
 
 $app->start(); //metodo q inicia a app

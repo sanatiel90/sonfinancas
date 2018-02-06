@@ -11,15 +11,10 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form method="POST" action="{{ route('category-costs.store') }}" >
-                        <div class="form-group">
-                            <label class="control-label"> Nome </label>
-                            <input class="form-control" type="text" placeholder="Nome"  name="name">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>
-                        </button>
-                    </form>
+                  {% set action = route('category-costs.store') %}
+                   {% set submitIcon = 'floppy-disk' %}
+                    {% include 'category-costs/_form.html.twig' %}
+
                     
                 </div>
             </div>

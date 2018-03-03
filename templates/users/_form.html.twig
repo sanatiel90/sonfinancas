@@ -1,0 +1,18 @@
+ <form method="POST" action="{{ action }}" >
+                        <div class="form-group">
+                            <label class="control-label"> Primeiro Nome </label>
+                            <input class="form-control" type="text"  value="{{ user.first_name }}" name="first_name">
+                            <label class="control-label"> Último Nome </label>
+                            <input class="form-control" type="text" value="{{ user.last_name }}" name="last_name">
+                            <label class="control-label"> E-mail </label>
+                            <input class="form-control" type="email" value="{{ user.email }}" name="email">
+							
+							{% if user.id is null %}                           
+                            <label class="control-label"> Senha </label>
+                            <input class="form-control" type="password" value="{{ user.password }}" name="password">
+                        	{% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span class="glyphicon glyphicon-{{ submitIcon }}"></span>
+                        </button>
+                    </form>

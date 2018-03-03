@@ -8,6 +8,7 @@ use SONFin\ServiceContainerInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use SONFin\Repository\RepositoryFactory;
 use SONFin\Models\CategoryCost;
+use SONFin\Models\User;
 
 /**
 * class plugin q gerencia as config do db da aplicacao, utilizando a lib Eloquent
@@ -29,6 +30,11 @@ class DbPlugin implements PluginInterface
 		//servico q acessa a fabrica de repos. e cria repos. de category costs
 		$container->addLazy('category-cost.repository', function(ContainerInterface $container){
 			return $container->get('repository.factory')->factory(CategoryCost::class);
+		});
+
+		//servico q acessa a fabrica de repos. e cria repos. de users
+		$container->addLazy('user.repository', function(ContainerInterface $container){
+			return $container->get('repository.factory')->factory(User::class);
 		});
 
 		

@@ -6,6 +6,7 @@ use SONFin\Application;
 use SONFin\Plugins\RoutePlugin;
 use SONFin\Plugins\ViewPlugin;
 use SONFin\Plugins\DbPlugin;
+use SONFin\Plugins\AuthPlugin;
 use SONFin\ServiceContainer;
 use Zend\Diactoros\Response;
 use SONFin\Models\CategoryCost; 
@@ -22,6 +23,7 @@ $app = new Application($serviceContainer); //instanciando  application
 $app->plugin(new RoutePlugin()); 
 $app->plugin(new ViewPlugin());
 $app->plugin(new DbPlugin());
+$app->plugin(new AuthPlugin());
 
 
 
@@ -50,6 +52,8 @@ $app->get('/teste/rota{name}',function(ServerRequestInterface $request) use($app
 
 //importando controller referent as categorias; precisa ser importado depois da criacao da instancia de $app, pois esta instancia sera usada la no controller
 require_once __DIR__ . '/../src/controllers/category-costs.php'; 
+require_once __DIR__ . '/../src/controllers/users.php'; 
+require_once __DIR__ . '/../src/controllers/auth.php'; 
 
 
 $app->start(); //metodo q inicia a app
